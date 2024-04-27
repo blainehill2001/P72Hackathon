@@ -1,22 +1,18 @@
-import datetime
+from datetime import datetime
 
-import gunicorn  # type: ignore
-from flask import Flask, request  # type: ignore
-
-__all__ = ["gunicorn"]
+from flask import Flask, make_response, request  # type: ignore
+from flask_cors import CORS  # type: ignore
+from temp import test
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
-@app.route("/get_time", methods=["GET"])
+@app.route("/algo")
 def get_time():
-    # Print the request parameters
-    print(f"Request Parameters: {request.args}")
-
-    # Get the current time
-    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-    return current_time
+    test(request.headers)
+    current_time = datetime.now().strftime("%H:%M:%S")
+    return make_response(current_time)
 
 
 if __name__ == "__main__":
