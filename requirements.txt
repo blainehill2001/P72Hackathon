@@ -5,3 +5,5 @@ networkx==3.3
 networkx==3.2.1
 numpy==1.24.4
 pandas==2.2.2
+networkx
+requests
