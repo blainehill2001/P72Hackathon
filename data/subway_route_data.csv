@@ -1,0 +1,30 @@
+From,To
+50 St 1,"['42 St - Port Authority Bus Terminal', '7 Av']"
+7 Av,['47-50 Sts - Rockefeller Ctr']
+50 St 2,['Times Sq - 42 St']
+49 St,['Times Sq - 42 St']
+47-50 Sts - Rockefeller Ctr,"['5 Av/53 St', '42 St - Bryant Pk']"
+5 Av/53 St,['Lexington Av/53 St']
+51 St,['Grand Central - 42 St']
+42 St - Port Authority Bus Terminal,['34 St - Penn Station 1']
+Times Sq - 42 St,"['34 St - Penn Station 2', '5 Av', '34 St - Herald Sq', 'Grand Central - 42 St']"
+42 St - Bryant Pk,['34 St - Herald Sq']
+5 Av,['Grand Central - 42 St']
+Grand Central - 42 St,['33 St']
+34 St - Hudson Yards,['Times Sq - 42 St']
+34 St - Penn Station 1,['23 St 1']
+34 St - Penn Station 2,['28 St 1']
+34 St - Herald Sq,"['28 St 2', '23 St 3']"
+28 St 2,['23 St 4']
+33 St,['28 St 3']
+23 St 1,['14 St/8 Av']
+23 St 2,['18 St']
+18 St,['14 St']
+23 St 3,['14 St/6 Av']
+23 St 4,['14 St - Union Sq']
+28 St 3,['23 St 5']
+23 St 5,['14 St - Union Sq']
+14 St/8 Av,"['14 St/6 Av', 'W 4 St - Wash Sq']"
+14 St/6 Av,"['W 4 St - Wash Sq', '14 St - Union Sq']"
+14 St - Union Sq,"['8 St - NYU', 'Astor Pl']"
+28 St 1,['23 St 2']
