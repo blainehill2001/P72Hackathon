@@ -1,6 +1,9 @@
 import datetime
 
+import gunicorn  # type: ignore
 from flask import Flask, request  # type: ignore
+
+__all__ = ["gunicorn"]
 
 app = Flask(__name__)
 
