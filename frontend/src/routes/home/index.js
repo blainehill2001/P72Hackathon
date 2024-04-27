@@ -1,11 +1,11 @@
 import { h } from "preact";
 import style from "./style.css";
-import Form from "./Form";
+import ItineraryForm from "./ItineraryForm";
 
 const Home = () => {
   return (
     <div class={style.home}>
-      <Form />
+      <ItineraryForm />
     </div>
   );
 };
