@@ -1,121 +1,100 @@
-import { h, Component } from "preact";
+import { useState } from "preact/hooks";
 
-class ItineraryForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      locations: [],
-      selectedLocation: null,
-      priority: "3",
-      time: "",
+const ItineraryForm = () => {
+  const [locations, setLocations] = useState([]);
+  const [newLocation, setNewLocation] = useState("");
+  const [priority, setPriority] = useState(3);
+  const [visitTime, setVisitTime] = useState("");
+  const [apiResponse, setApiResponse] = useState(null); // State to store API response
+
+  const handleAddLocation = () => {
+    const locationData = {
+      name: newLocation,
+      priority: priority,
+      time: visitTime || undefined,
     };
-    this.mapRef = null;
-    this.autocomplete = null;
-  }
-
-  componentDidMount() {
-    this.initMap();
-  }
-
-  initMap = () => {
-    const google = window.google; // Ensure Google script is loaded
-    this.mapRef = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: -34.397, lng: 150.644 },
-      zoom: 8,
-    });
-
-    this.autocomplete = new google.maps.places.Autocomplete(
-      document.getElementById("autocomplete")
-    );
-    this.autocomplete.bindTo("bounds", this.mapRef);
-    this.autocomplete.addListener("place_changed", this.onPlaceSelected);
+    setLocations([...locations, locationData]);
+    setNewLocation("");
+    setPriority(3);
+    setVisitTime("");
   };
 
-  onPlaceSelected = () => {
-    const place = this.autocomplete.getPlace();
-    if (!place.geometry) {
-      console.log("Returned place contains no geometry");
-      return;
-    }
-    const location = {
-      latitude: place.geometry.location.lat(),
-      longitude: place.geometry.location.lng(),
-      priority: "3",
-      time: "",
-    };
-    this.setState({ selectedLocation: location });
+  const handleRemoveLocation = (index) => {
+    const updatedLocations = locations.filter((_, idx) => idx !== index);
+    setLocations(updatedLocations);
   };
 
-  addLocation = () => {
-    this.setState((prevState) => ({
-      locations: [...prevState.locations, prevState.selectedLocation],
-      selectedLocation: null,
-    }));
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const apiUrl = "http://127.0.0.1:5000/algo";
+    console.log(JSON.stringify({ locations }));
+
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ locations }),
+    })
+      .then((response) => {
+        console.log(response);
+        response.json();
+      })
+      .then((data) => {
+        console.log("Success:", data);
+        setApiResponse(data); // Update state with the API response
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
-  removeLocation = (index) => {
-    this.setState((prevState) => ({
-      locations: prevState.locations.filter((_, i) => i !== index),
-    }));
-  };
-
-  handlePriorityChange = (event) => {
-    this.setState({ priority: event.target.value });
-  };
-
-  handleTimeChange = (event) => {
-    this.setState({ time: event.target.value });
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    // Process the form data
-  };
-
-  render() {
-    return (
-      <div>
-        <div id="map" style={{ height: "300px" }}></div>
-        <input id="autocomplete" type="text" placeholder="Enter a location" />
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Priority:
-            <select
-              value={this.state.priority}
-              onChange={this.handlePriorityChange}
-            >
-              <option value="1">1 - Highest</option>
-              <option value="2">2</option>
-              <option value="3">3 - Default</option>
-              <option value="4">4</option>
-              <option value="5">5 - Lowest</option>
-            </select>
-          </label>
-          <label>
-            Time:
-            <input
-              type="time"
-              value={this.state.time}
-              onChange={this.handleTimeChange}
-            />
-          </label>
-          <button type="button" onClick={this.addLocation}>
-            Add Location
-          </button>
-          <button type="submit">Submit Itinerary</button>
-        </form>
-        <ul>
-          {this.state.locations.map((loc, index) => (
-            <li key={index}>
-              Latitude: {loc.latitude}, Longitude: {loc.longitude}, Priority:{" "}
-              {loc.priority}, Time: {loc.time}
-              <button onClick={() => this.removeLocation(index)}>Remove</button>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Location:
+          <input
+            type="text"
+            value={newLocation}
+            onChange={(e) => setNewLocation(e.target.value)}
+          />
+        </label>
+        <label>
+          Priority (1-5):
+          <input
+            type="number"
+            min="1"
+            max="5"
+            value={priority}
+            onChange={(e) => setPriority(parseInt(e.target.value))}
+          />
+        </label>
+        <label>
+          Visit Time (optional):
+          <input
+            type="time"
+            value={visitTime}
+            onChange={(e) => setVisitTime(e.target.value)}
+          />
+        </label>
+        <button type="button" onClick={handleAddLocation}>
+          Add Location
+        </button>
+        <button type="submit">Submit Itinerary</button>
+      </form>
+      <ul>
+        {locations.map((loc, index) => (
+          <li key={index}>
+            {loc.name} - Priority: {loc.priority} - Time:{" "}
+            {loc.time || "Anytime"}
+            <button onClick={() => handleRemoveLocation(index)}>Remove</button>
+          </li>
+        ))}
+      </ul>
+      {apiResponse && <div>Response: {JSON.stringify(apiResponse)}</div>}
+    </div>
+  );
+};
 
 export default ItineraryForm;
