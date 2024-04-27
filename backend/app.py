@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 
-@app.route("/algo")
+@app.route("/algo", methods=["POST"])
 def get_time():
     test(request.headers)
     current_time = datetime.now().strftime("%H:%M:%S")

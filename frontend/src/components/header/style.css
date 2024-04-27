@@ -49,3 +49,19 @@
 .header nav a.active {
 	background: rgba(0, 0, 0, 0.4);
 }
+
+
+.navContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .githubLink {
+    display: inline-block;
+  }
+
+  .githubIcon {
+    display: block;
+    margin: 0 auto;
+  }
