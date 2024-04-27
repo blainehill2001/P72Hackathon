@@ -4,7 +4,7 @@ import csv
 
 with open('keys.json', 'r') as keys:
     keys = json.load(keys)
-api_key = keys['GOOGLE_API_KEY']
+api_key = "AIzaSyBF1v47rTxjmm0LEBx-vtO5IDWYvlUBBcA"
 
 def get_attraction_locations(attraction_names):
     """
@@ -57,8 +57,8 @@ def calculate_all_routes(api_key, landmarks):
     actual_routes = [route for route in routes if route["condition"] == "ROUTE_EXISTS"]
     return [(landmarks[int(route["originIndex"])][0], landmarks[int(route["destinationIndex"])][0], get_minutes_from_duration_string(route["duration"])) for route in actual_routes]
 
-landmarks = ["The Vessel", "Empire State Building", "Times Square", "Rockefeller Center"]
-print(calculate_all_routes(api_key, landmarks))
+
+#calculate_all_routes(api_key, landmarks))
 
 # Returns in the form of a list [("origin", "destination", trip duration (minutes))]
 # [('Rockefeller Center', 'Times Square', 11.13), ('Times Square', 'Rockefeller Center', 10.02), ('Times Square', 'The Vessel', 14.2), ('The Vessel', 'Times Square', 13.45), ('Empire State Building', 'Times Square', 12.2), ('The Vessel', 'Empire State Building', 17.08), ('The Vessel', 'Rockefeller Center', 21.75), ('Empire State Building', 'The Vessel', 17.93), ('Empire State Building', 'Rockefeller Center', 11.85), ('Rockefeller Center', 'Empire State Building', 15.83), ('Times Square', 'Empire State Building', 11.7), ('Rockefeller Center', 'The Vessel', 19.3)]
