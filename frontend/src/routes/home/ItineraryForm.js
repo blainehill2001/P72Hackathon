@@ -1,11 +1,18 @@
 import { useState } from "preact/hooks";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ItineraryForm = () => {
   const [locations, setLocations] = useState([]);
   const [newLocation, setNewLocation] = useState("");
   const [priority, setPriority] = useState(3);
   const [visitTime, setVisitTime] = useState("");
-  const [apiResponse, setApiResponse] = useState(null); // State to store API response
+  const [apiResponse, setApiResponse] = useState(null);
 
   const handleAddLocation = () => {
     const locationData = {
@@ -27,8 +34,6 @@ const ItineraryForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const apiUrl = "http://127.0.0.1:5000/algo";
-    console.log(JSON.stringify({ locations }));
-
     fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -36,14 +41,9 @@ const ItineraryForm = () => {
       },
       body: JSON.stringify({ locations }),
     })
-      .then((response) => {
-        console.log(response);
-
-        response.json();
-      })
+      .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
-        setApiResponse(data); // Update state with the API response
+        setApiResponse(data);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -53,46 +53,65 @@ const ItineraryForm = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label>
-          Location:
-          <input
-            type="text"
-            value={newLocation}
-            onChange={(e) => setNewLocation(e.target.value)}
-          />
-        </label>
-        <label>
-          Priority (1-5):
-          <input
-            type="number"
-            min="1"
-            max="5"
-            value={priority}
-            onChange={(e) => setPriority(parseInt(e.target.value))}
-          />
-        </label>
-        <label>
-          Visit Time (optional):
-          <input
-            type="time"
-            value={visitTime}
-            onChange={(e) => setVisitTime(e.target.value)}
-          />
-        </label>
-        <button type="button" onClick={handleAddLocation}>
+        <TextField
+          label="Location"
+          variant="outlined"
+          value={newLocation}
+          onChange={(e) => setNewLocation(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Priority (1-5)"
+          type="number"
+          InputProps={{ inputProps: { min: 1, max: 5 } }}
+          value={priority}
+          onChange={(e) => setPriority(parseInt(e.target.value))}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Visit Time (optional)"
+          type="time"
+          value={visitTime}
+          onChange={(e) => setVisitTime(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <Button
+          variant="contained"
+          onClick={handleAddLocation}
+          style={{ margin: 8 }}
+        >
           Add Location
-        </button>
-        <button type="submit">Submit Itinerary</button>
+        </Button>
+        <Button type="submit" variant="contained" color="primary">
+          Submit Itinerary
+        </Button>
       </form>
-      <ul>
+      <List>
         {locations.map((loc, index) => (
-          <li key={index}>
-            {loc.name} - Priority: {loc.priority} - Time:{" "}
-            {loc.time || "Anytime"}
-            <button onClick={() => handleRemoveLocation(index)}>Remove</button>
-          </li>
+          <ListItem
+            key={index}
+            secondaryAction={
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                onClick={() => handleRemoveLocation(index)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            }
+          >
+            <ListItemText
+              primary={loc.name}
+              secondary={`Priority: ${loc.priority} - Time: ${
+                loc.time || "Anytime"
+              }`}
+            />
+          </ListItem>
         ))}
-      </ul>
+      </List>
       {apiResponse && <div>Response: {JSON.stringify(apiResponse)}</div>}
     </div>
   );

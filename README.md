@@ -14,3 +14,5 @@ This project is a trip itinerary scheduler designed to optimize both cost and ti
 
 
 ![Workflow Diagram](workflow.png)
+
+![UI](ui_diagram.png)
