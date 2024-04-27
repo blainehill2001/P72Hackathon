@@ -1,0 +1,12 @@
+{
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/node",
+        "config": {
+          "build_command": "USE_STREAMS=1 pnpm build"
+        }
+      }
+    ],
+    "outputDirectory": ".vercel/output"
+  }
