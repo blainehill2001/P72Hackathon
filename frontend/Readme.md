@@ -1,22 +1,6 @@
-# frontend
+## frontend
 
-## CLI Commands
 
-```bash
-# install dependencies
-npm install
+This is the frontend of Itinerfy, built with Preact.
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# test the production build locally
-npm run serve
-
-# run tests with jest and enzyme
-npm run test
-```
-
-For detailed explanation on how things work, checkout the [CLI Readme](https://github.com/developit/preact-cli/blob/master/README.md).
+It is hosted on Vercel and you can view it at itinerfy.vercel.app

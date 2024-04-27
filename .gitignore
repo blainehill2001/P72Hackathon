@@ -1,6 +1,6 @@
 .cache.sqlite
 
-.node_modules
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -163,3 +163,4 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 *.code-workspace
+.vercel
