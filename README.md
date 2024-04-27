@@ -10,39 +10,6 @@ This project is a trip itinerary scheduler designed to optimize both cost and ti
 
 ## Installation
 
-1. Clone the repository to your local machine:
-
-    ```bash
-    git clone https://github.com/blainehill2001/P72Hackathon.git
-    ```
-
-2. Navigate to the project directory:
-
-    ```bash
-    cd P72Hackathon
-    ```
-
-3. Install the required dependencies:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. Run the application:
-
-    ```bash
-    python app.py
-    ```
-
 ## Usage
 
-1. Launch the application by running `app.py`.
-  
-2. Input your travel details including starting location, destination, travel dates, and any preferences or constraints you have.
-  
-3. The scheduler will then generate an optimized itinerary based on the input provided.
-  
-4. Review the itinerary and make any necessary adjustments.
-  
-5. Save or export the finalized itinerary for your reference.
 
